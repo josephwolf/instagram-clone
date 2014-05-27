@@ -3,3 +3,26 @@
 <%= link_to "Register", new_user_registration_path, :method => :get %>
 
 <h1> Not Instagram. </h1>
+
+<div id="usersection">
+Your Images:
+<% if @posts.any? %>
+	<% @posts.each do |post| %>
+		<ul> <%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %> </ul>
+	<% end %>
+<% else %>
+	No posts yet!
+<% end %>
+<input type="submit" value="New Post" 
+    onclick="window.location='/posts/new';" />
+</div>
+
+<div id="followsection">
+
+	<ul><div class="followeduser">
+		Placeholder
+	</div>
+	<div class="followeduser">
+		Placeholder
+	</div></ul>
+</div>
