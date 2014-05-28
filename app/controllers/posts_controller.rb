@@ -5,7 +5,12 @@ class PostsController < ApplicationController
 	end
 
 	def create
-		@post = Post.create!(params[:post].permit(:imageurl, :description))
+		@post = Post.create!(params[:post].permit(:imageurl, :description, :picture))
+		@post.save!
+		redirect_to '/'
+	end
+
+	def index
 		redirect_to '/'
 	end
 

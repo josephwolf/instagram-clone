@@ -4,9 +4,9 @@ describe 'Posts' do
 	it 'should be able to make a new post on the homeplage' do
 		visit '/'
 		click_button 'New Post'
-		fill_in 'imageurl', with: 'http://i0.kym-cdn.com/photos/images/original/000/103/740/c2c.png'
+		attach_file 'picture', Rails.root.join('spec/imagespac-man-space-102830.jpg')
 		click_button 'Create Post'
-		expect(page).not_to have_content 'No posts yet!'
+		expect(page).to have_css 'img.uploaded-pic'
 	end
 
 	it 'should take you to a more detailed page when clicked on' do
