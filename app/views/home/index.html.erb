@@ -1,18 +1,28 @@
-<%= link_to "Sign Out", destroy_user_session_path, :method => :delete %>
-<%= link_to "Sign In", user_session_path, :method => :post %>
-<%= link_to "Register", new_user_registration_path, :method => :get %>
-
 <h1> Not Instagram. </h1>
 
 <div id="usersection">
 Your Images:
 <% if @posts.any? %>
+
 	<% @posts.each do |post| %>
-		<ul> <%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %> </ul>
+
+		<ul>
+		<li><%= post.title %></li>
+		<li>posted by <%= post.user.email %></li>
+		<li><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></li>
+		<li><%= post.description %></li>
+
+		<% if post.user == current_user %>
+			<li><%= link_to 'Delete', post_path(post), method: :delete %></li>
+		<% end %>
+		</ul>
+
 	<% end %>
+
 <% else %>
 	No posts yet!
 <% end %>
+
 <input type="submit" value="New Post" 
     onclick="window.location='/posts/new';" />
 </div>
