@@ -1,38 +1,67 @@
-<h1> Not Instagram. </h1>
-
-<div id="usersection">
-Your Images:
-<% if @posts.any? %>
-
-	<% @posts.each do |post| %>
-
-		<ul>
-		<li><%= post.title %></li>
-		<li>posted by <%= post.user.email %></li>
-		<li><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></li>
-		<li><%= post.description %></li>
-
-		<% if post.user == current_user %>
-			<li><%= link_to 'Delete', post_path(post), method: :delete %></li>
+<% unless user_signed_in? %>
+<div class="jumbotron">
+	<div class="container">
+		<h1>Welcome!</h1>
+		<p>The latest hot shit from Japan</p>
+		<p><%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary btn-lg' %></p>
+	</div>
+</div>
+<% end %>
+<% if user_signed_in? %>
+<div id='usersection' class="row">
+	<div class='col-md-2'><h2>Your Images:</h2></div>
+	<% if current_user.posts.any? %>
+	<div class="row col-md-9 userposts">
+		<% current_user.posts.sort_by(&:created_at).reverse.take(3).each do |post| %>
+		<div class='col-md-4 userpost'>
+			<div class="panel panel-default">
+			<div class="panel-heading"><p><h3><%= post.title %></h3></p></div>
+			<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
+			<p><%= post.description %></p>
+			<% if post.user == current_user %>
+			<div class='options'><%= link_to 'Delete', post_path(post), method: :delete %>
+			<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %></div>
+		</div></div>
+		</div>
 		<% end %>
-		</ul>
 
+				<div class="modal fade image-modal-<%= post.id %>">
+		  <div class="modal-dialog modal-lg">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        			<h4 class="modal-title"> <%= post.title %> </h4>
+        		</div>
+        		<div class="modal-body">
+        			<%= image_tag post.picture.url %>
+        		</div>
+		    </div>
+		  </div>
+		</div>
+		<% end %>
+	</div>
+	<% else %>
+	<h3>You havn't posted anything yet!</h3>
+	<% end %>
+	<div class='col-md-1'><button type="submit" class="btn btn-info" value="New Post"
+		onclick="window.location='/posts/new';">New Post!</button>
+	</div>
 	<% end %>
 
-<% else %>
-	No posts yet!
-<% end %>
-
-<input type="submit" value="New Post" 
-    onclick="window.location='/posts/new';" />
 </div>
-
 <div id="followsection">
-
-	<ul><div class="followeduser">
-		Placeholder
+	<% if @posts.any? %>
+	<div id="userposts">
+		<% @posts.sort_by(&:created_at).reverse.each do |post| %>
+		<div class='userpost'>
+			<p><h3><%= post.title %></h3></p>
+			<p>posted by <%= post.user.email %></p>
+			<p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
+			<p><%= post.description %></p>
+		</div>
+		<% end %>
 	</div>
-	<div class="followeduser">
-		Placeholder
-	</div></ul>
+	<% else %>
+	<h3>No one has posted anything! ;~;</h3>
+	<% end %>
 </div>

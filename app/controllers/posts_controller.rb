@@ -14,6 +14,7 @@ class PostsController < ApplicationController
   end
 
   def index
+  	render json: current_user.posts[params[:skip].to_i..params[:take].to_i]
   end
 
   def destroy
