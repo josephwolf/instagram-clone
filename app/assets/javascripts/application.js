@@ -15,3 +15,24 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+
+$(document).ready(function() {
+	$('#gallery-scroll').click(function(){
+		skip = $('#gallery-scroll').data('skip')
+		$.ajax({
+			url:"/posts?skip=" + skip,
+			success:function(data){
+
+				$(".userposts").html('')
+				$('#gallery-scroll').data('skip', skip + data.length)
+				_.each(data, function(post){
+					var template = $("#user-gallery").html();
+					var rendered = Mustache.render(template,post);
+					$(".userposts").append(rendered);
+				});
+
+			}
+		});
+	});
+});

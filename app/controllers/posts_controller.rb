@@ -7,14 +7,15 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.create!(params[:post].permit(:title, :description, :picture))
+    @post = Post.create!(params[:post].permit(:title, :description, :picture, :tag_names))
     @post.user = current_user
     @post.save!
     redirect_to '/'
   end
 
   def index
-  	render json: current_user.posts[params[:skip].to_i..params[:take].to_i]
+    params[:take] ||= 3
+  	render json: current_user.posts[params[:skip].to_i-1..params[:take].to_i]
   end
 
   def destroy
@@ -28,3 +29,4 @@ class PostsController < ApplicationController
     redirect_to '/posts'
   end
 end
+

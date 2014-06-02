@@ -8,6 +8,20 @@
 </div>
 <% end %>
 <% if user_signed_in? %>
+<template id="user-gallery">
+	<div class='col-md-4 userpost'>
+		<div class="panel panel-default">
+			<div class="panel-heading"><p><h3>{{ title }}</h3></p></div>
+			<div class="panel-body">
+				<p>
+					<img class="uploaded-pic" src="">
+				</p>
+				<p>{{ description }}</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</template>
 <div id='usersection' class="row">
 	<div class='col-md-2'><h2>Your Images:</h2></div>
 	<% if current_user.posts.any? %>
@@ -47,12 +61,15 @@
 	<div class='col-md-1'><button type="submit" class="btn btn-info" value="New Post"
 		onclick="window.location='/posts/new';">New Post!</button>
 	</div>
+	<div class='col-md-1'>
+		<button id="gallery-scroll" type="submit" class="btn btn-info" value="New Three" data-skip="3">Next Three!</button>
+	</div>
 	<% end %>
 </div>
 <div id="followsection">
 	<p><h3>All Posts:</h3></p>
 	<% if @posts.any? %>
-	<div class="row col-md-12 userposts">
+	<div class="row col-md-12 followerposts">
 		<% @posts.sort_by(&:created_at).reverse.each do |post| %>
 		<div class='col-md-3 userpost'>
 			<div class="panel panel-default">
