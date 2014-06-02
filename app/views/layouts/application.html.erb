@@ -32,15 +32,15 @@
 						<% end %>
 					<% else %>
 
-						<%= link_to "Sign Out", destroy_user_session_path, :method => :delete, class: "btn btn-success navbar-right" %>
+						<%= link_to "Sign Out", destroy_user_session_path, :method => :delete, class: "btn btn-success navbar-right sign_out" %>
 
 					<% end %>
 					</div><!--/.navbar-collapse -->
 				</div>
 			</div>
 			<!-- Main jumbotron for a primary marketing message or call to action -->
-			<p class="notice"><%= notice %></p>
-			<p class="alert"><%= alert %></p>
+			<p class="notice headerfix"><%= notice %></p>
+			<p class="alert headerfix"><%= alert %></p>
 			<%= yield %>
 			<div class="container">
 				<footer>

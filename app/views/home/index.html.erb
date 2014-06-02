@@ -1,7 +1,7 @@
 <% unless user_signed_in? %>
 <div class="jumbotron">
 	<div class="container">
-		<h1>Welcome!</h1>
+		<h1>Welcome to Joeygram!</h1>
 		<p>The latest hot shit from Japan</p>
 		<p><%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary btn-lg' %></p>
 	</div>
@@ -15,28 +15,29 @@
 		<% current_user.posts.sort_by(&:created_at).reverse.take(3).each do |post| %>
 		<div class='col-md-4 userpost'>
 			<div class="panel panel-default">
-			<div class="panel-heading"><p><h3><%= post.title %></h3></p></div>
-			<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
-			<p><%= post.description %></p>
-			<% if post.user == current_user %>
-			<div class='options'><%= link_to 'Delete', post_path(post), method: :delete %>
-			<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %></div>
-		</div></div>
+				<div class="panel-heading"><p><h3><%= post.title %></h3></p></div>
+				<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
+					<p><%= post.description %></p>
+					<% if post.user == current_user %>
+					<div class='options'><%= link_to 'Delete', post_path(post), method: :delete %>
+						<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %>
+					</div>
+				</div>
+			</div>
 		</div>
 		<% end %>
-
-				<div class="modal fade image-modal-<%= post.id %>">
-		  <div class="modal-dialog modal-lg">
-		    <div class="modal-content">
-		    	<div class="modal-header">
-        			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        			<h4 class="modal-title"> <%= post.title %> </h4>
-        		</div>
-        		<div class="modal-body">
-        			<%= image_tag post.picture.url %>
-        		</div>
-		    </div>
-		  </div>
+		<div class="modal fade image-modal-<%= post.id %>">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"> <%= post.title %> </h4>
+					</div>
+					<div class="modal-body">
+						<%= image_tag post.picture.url %>
+					</div>
+				</div>
+			</div>
 		</div>
 		<% end %>
 	</div>
@@ -47,17 +48,36 @@
 		onclick="window.location='/posts/new';">New Post!</button>
 	</div>
 	<% end %>
-
 </div>
 <div id="followsection">
+	<p><h3>All Posts:</h3></p>
 	<% if @posts.any? %>
-	<div id="userposts">
+	<div class="row col-md-12 userposts">
 		<% @posts.sort_by(&:created_at).reverse.each do |post| %>
-		<div class='userpost'>
-			<p><h3><%= post.title %></h3></p>
-			<p>posted by <%= post.user.email %></p>
-			<p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
-			<p><%= post.description %></p>
+		<div class='col-md-3 userpost'>
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<p><h3><%= post.title %></h3></p>
+					<p>Posted by: <%= post.user.email %></p>
+				</div>
+				<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
+					<p><%= post.description %></p>
+					<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %>
+				</div>
+			</div>
+		</div>
+		<div class="modal fade image-modal-<%= post.id %>">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+						<h4 class="modal-title"> <%= post.title %> </h4>
+					</div>
+					<div class="modal-body">
+						<%= image_tag post.picture.url %>
+					</div>
+				</div>
+			</div>
 		</div>
 		<% end %>
 	</div>
