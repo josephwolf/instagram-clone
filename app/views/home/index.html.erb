@@ -14,7 +14,7 @@
 			<div class="panel-heading"><p><h3>{{ title }}</h3></p></div>
 			<div class="panel-body">
 				<p>
-					<img class="uploaded-pic" src="">
+					<img class="uploaded-pic" src="http://s3.amazonaws.com/instagram-clone-joey/posts/pictures/000/000/0{{ id }}/medium/{{ picture_file_name }}">
 				</p>
 				<p>{{ description }}</p>
 				</div>
@@ -23,7 +23,12 @@
 	</div>
 </template>
 <div id='usersection' class="row">
-	<div class='col-md-2'><h2>Your Images:</h2></div>
+	<div class="row col-md-2">
+		<div class='col-md-12'><h2>Your Images:</h2></div>
+		<div class='col-md-12'>
+			<button id="gallery-scroll-back" type="submit" class="btn btn-info" value="Previous Three" data-skip="3">Previous Three!</button>
+		</div>
+	</div>
 	<% if current_user.posts.any? %>
 	<div class="row col-md-9 userposts">
 		<% current_user.posts.sort_by(&:created_at).reverse.take(3).each do |post| %>
@@ -58,11 +63,13 @@
 	<% else %>
 	<h3>You havn't posted anything yet!</h3>
 	<% end %>
-	<div class='col-md-1'><button type="submit" class="btn btn-info" value="New Post"
-		onclick="window.location='/posts/new';">New Post!</button>
-	</div>
-	<div class='col-md-1'>
-		<button id="gallery-scroll" type="submit" class="btn btn-info" value="New Three" data-skip="3">Next Three!</button>
+	<div class="row col-md-1">
+		<div class='col-md-12 derp'><button type="submit" class="btn btn-info" value="New Post"
+			onclick="window.location='/posts/new';">New Post!</button>
+		</div>
+		<div class='col-md-12 derp'>
+			<button id="gallery-scroll" type="submit" class="btn btn-info" value="New Three" data-skip="3">Next Three!</button>
+		</div>
 	</div>
 	<% end %>
 </div>

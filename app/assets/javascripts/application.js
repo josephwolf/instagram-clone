@@ -24,8 +24,25 @@ $(document).ready(function() {
 			url:"/posts?skip=" + skip,
 			success:function(data){
 
-				$(".userposts").html('')
+				// $(".userposts").html('')
 				$('#gallery-scroll').data('skip', skip + data.length)
+				_.each(data, function(post){
+					var template = $("#user-gallery").html();
+					var rendered = Mustache.render(template,post);
+					$(".userposts").append(rendered);
+				});
+
+			}
+		});
+	});
+
+	$('#gallery-scroll').click(function(){
+		take = $('#gallery-scroll-back').data('take')
+		$.ajax({
+			url:"/posts?take=" + take,
+			success:function(data){
+
+				$('#gallery-scroll-back').data('take', take + data.length)
 				_.each(data, function(post){
 					var template = $("#user-gallery").html();
 					var rendered = Mustache.render(template,post);
