@@ -1,4 +1,4 @@
-<% unless user_signed_in? %>
+<% if !user_signed_in? && !admin_signed_in? %>
 <div class="jumbotron">
 	<div class="container">
 		<h1>Welcome to Joeygram!</h1>
@@ -6,6 +6,13 @@
 		<p><%= link_to 'Sign Up', new_user_registration_path, class: 'btn btn-primary btn-lg' %></p>
 	</div>
 </div>
+<% elsif admin_signed_in? %>
+	<div class="jumbotron">
+		<div class="container">
+			<h1>Hey sexy ;D</h1>
+		</div>
+	</div>
+<% else %>
 <% end %>
 <% if user_signed_in? %>
 <template id="user-gallery">
@@ -86,7 +93,10 @@
 				</div>
 				<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
 					<p><%= post.description %></p>
-					<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %>
+					<% if admin_signed_in? %>
+						<div><%= link_to 'Delete', post_path(post), method: :delete %>
+					
+					<%= link_to 'Show more', '#', data: { toggle: 'modal', target: ".image-modal-#{post.id}"} %><% end %>
 				</div>
 			</div>
 		</div>
@@ -107,5 +117,5 @@
 	</div>
 	<% else %>
 	<h3>No one has posted anything! ;~;</h3>
-	<% end %>
+<% end %>
 </div>

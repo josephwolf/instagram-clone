@@ -22,7 +22,7 @@
 					<a class="navbar-brand" href="#">Joeygram</a>
 				</div>
 				<div class="navbar-collapse collapse">
-					<% unless user_signed_in? %>
+					<% unless user_signed_in? || admin_signed_in? %>
 
 						<div class="navbar-form navbar-right"><%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
 
