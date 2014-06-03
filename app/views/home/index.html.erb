@@ -93,6 +93,7 @@
 				</div>
 				<div class="panel-body"><p><%= image_tag post.picture.url(:medium), class: 'uploaded-pic' %></p>
 					<p><%= post.description %></p>
+					<p><%= link_to 'Buy!', new_post_charge_path(post), class: "btn btn-info" %></p>
 					<% if admin_signed_in? %>
 						<div><%= link_to 'Delete', post_path(post), method: :delete %>
 					

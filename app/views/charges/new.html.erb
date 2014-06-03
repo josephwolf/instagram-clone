@@ -1,0 +1,12 @@
+<div class="container">
+	<%= form_tag post_charges_path(@post)  do %>
+		<%= image_tag @post.picture.url %>
+		<h2>Buy print for $money</h2>
+	
+	  <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+	          data-key="<%= Rails.application.secrets.stripe_public_key %>"
+	          data-description="A delicious print!"
+	          data-currency="SOS"
+	          data-amount="133700"></script>
+	<% end %>
+</div>

@@ -1,1 +1,15 @@
-No orders yet!
+<% if @orders.any? %>
+
+	<% @orders.each do |order| %>
+		<div>
+		<%= order.user.email %>
+		<%= link_to order.post.title, '/' %>
+		<%= order.number %>
+		</div>
+	<% end %>
+
+<% else %>
+
+	No orders yet!
+
+<% end %>
