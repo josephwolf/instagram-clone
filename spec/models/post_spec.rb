@@ -10,5 +10,19 @@ describe Post do
 				expect(post.tags).to be_empty
 			end
 		end
+
+		describe 'one tag' do
+			it 'adds a single tag tothe post' do
+				post.tag_name = 'yolo'
+				expect(post.tags.count).to eq 1
+			end
+
+			it 'prepends the tag with a #' do
+				post.tag_name = 'yolo'
+				tag = post.tags.last
+
+				expect(tag.name).to eq '#yolo'				
+			end
+		end
 	end
 end
